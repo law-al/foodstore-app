@@ -6,12 +6,19 @@ import { FaUser } from "react-icons/fa6";
 import { VscMenu } from "react-icons/vsc";
 import { FaCartShopping } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Navbar() {
   const [openAbout, setOpenAbout] = useState(false);
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const searchBarRef = useRef();
+  const searchRef = useRef();
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+  }, [isSearchBarOpen]);
 
   function handleOpenSearchBar() {
     setIsSearchBarOpen(true);
@@ -135,6 +142,7 @@ function Navbar() {
           {/* Searchbar , profile, cart */}
           <div className="flex items-center gap-5 md:gap-5 justify-between">
             <div
+              ref={searchRef}
               onClick={handleOpenSearchBar}
               className="hidden md:block text-[#AACB22] text-xl bg-white p-3 rounded-full cursor-pointer hover:bg-[#AACB22] hover:text-white transition-all duration-300"
             >
@@ -162,6 +170,7 @@ function Navbar() {
 
         {/* Search bar */}
         <form
+          ref={searchBarRef}
           onSubmit={handleSearchSubmit}
           action=""
           className={`absolute top-[50%] left-[50%] -translate-y-[50%] ${
