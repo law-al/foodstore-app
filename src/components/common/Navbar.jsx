@@ -18,7 +18,19 @@ function Navbar() {
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
+
+    return () => document.removeEventListener("click", handleClickOutside);
   }, [isSearchBarOpen]);
+
+  function handleClickOutside(e) {
+    // console.log(searchRef.current === e.target.closest("#search-icon"));
+    if (
+      !searchBarRef.current.contains(e.target) &&
+      !(searchRef.current === e.target.closest("#search-icon")) // if e.target.closest() returns null. the statement returns false which is futher inverted
+    ) {
+      setIsSearchBarOpen(false);
+    }
+  }
 
   function handleOpenSearchBar() {
     setIsSearchBarOpen(true);
@@ -142,7 +154,7 @@ function Navbar() {
           {/* Searchbar , profile, cart */}
           <div className="flex items-center gap-5 md:gap-5 justify-between">
             <div
-              ref={searchRef}
+              id="search-icon"
               onClick={handleOpenSearchBar}
               className="hidden md:block text-[#AACB22] text-xl bg-white p-3 rounded-full cursor-pointer hover:bg-[#AACB22] hover:text-white transition-all duration-300"
             >
@@ -175,8 +187,8 @@ function Navbar() {
           action=""
           className={`absolute top-[50%] left-[50%] -translate-y-[50%] ${
             isSearchBarOpen
-              ? "-translate-x-[50%] opacity-100 z-10"
-              : "-translate-x-[40%] opacity-0 -z-10"
+              ? "-translate-x-[50%] opacity-100 visible z-10"
+              : "-translate-x-[40%] opacity-0 invisible -z-10"
           } transition-all duration-300`}
         >
           <input
@@ -192,7 +204,7 @@ function Navbar() {
 
         {/* Mobile nav */}
         <ul
-          className={`flex md:hidden text-[14px] flex-col absolute border border-black w-[200px] right-3 top-13 ${
+          className={`flex md:hidden text-[14px] flex-col absolute  border border-black w-[200px] right-3 top-13 z-50 ${
             !isMobileMenuOpen ? "opacity-0" : "opacity-100"
           } transition-all duration-100`}
         >
@@ -261,7 +273,7 @@ function Navbar() {
 
               {/* Drop down */}
               <ul
-                className={`  text-white md:top-10 bg-[#14462E] w-full shadow-md transition-all duration-200 pl-3 ${
+                className={` text-white md:top-10 bg-[#14462E] w-full shadow-md transition-all duration-200 pl-3 ${
                   openAbout ? "flex flex-col" : "hidden"
                 }`}
               >
