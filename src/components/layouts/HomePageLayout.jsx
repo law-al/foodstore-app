@@ -9,6 +9,5 @@ function HomePageLayout() {
     </div>
   );
 }
-//  Later
 
 export default HomePageLayout;
