@@ -187,8 +187,8 @@ function Navbar() {
           action=""
           className={`absolute top-[50%] left-[50%] -translate-y-[50%] ${
             isSearchBarOpen
-              ? "-translate-x-[50%] opacity-100 visible z-10"
-              : "-translate-x-[40%] opacity-0 invisible -z-10"
+              ? "-translate-x-[50%] opacity-100 visible z-[1]"
+              : "-translate-x-[40%] opacity-0 invisible -z-[1]"
           } transition-all duration-300`}
         >
           <input
@@ -204,7 +204,7 @@ function Navbar() {
 
         {/* Mobile nav */}
         <ul
-          className={`flex md:hidden text-[14px] flex-col absolute  border border-black w-[200px] right-3 top-13 z-50 ${
+          className={`flex md:hidden text-[14px] flex-col absolute  border border-black w-[200px] right-3 top-13 z-[40] ${
             !isMobileMenuOpen ? "opacity-0" : "opacity-100"
           } transition-all duration-100`}
         >

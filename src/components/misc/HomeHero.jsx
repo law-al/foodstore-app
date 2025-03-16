@@ -9,16 +9,16 @@ function HomeHero() {
       {/* Background Overlay */}
       <div
         style={{ backgroundImage: `url(${LeftOverlayBg})` }}
-        className="hidden md:block absolute h-[500px] w-[700px] bg-no-repeat border-red-500 top-0 left-0 opacity-20 z-10"
+        className="hidden md:block absolute h-[500px] w-[700px] bg-no-repeat border-red-500 top-0 left-0 opacity-20 z-[1]"
       ></div>
 
       {/* Navbar */}
-      <div className="relative mx-auto w-full z-40">
+      <div className="relative mx-auto w-full z-[20]">
         <Navbar />
       </div>
 
       {/* Hero Section */}
-      <div className="relative z-30 mx-auto mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 h-full">
+      <div className="relative z-[10] mx-auto mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 h-full">
         <div className="px-10 py-10 text-center md:text-left flex flex-col justify-center ">
           <h3 className="mb-5 md:mb-8 mt-6 md:mt-0 font-bold sm:text-sm md:text-2xl text-[#AACB22]">
             Welcome To Our Grocery Store
