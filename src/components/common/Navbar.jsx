@@ -13,8 +13,8 @@ function Navbar() {
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const searchBarRef = useRef();
-  const searchRef = useRef();
+  const searchBarRef = useRef(null);
+  const searchRef = useRef(null);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -26,10 +26,16 @@ function Navbar() {
     // console.log(searchRef.current === e.target.closest("#search-icon"));
     if (
       !searchBarRef.current.contains(e.target) &&
-      !(searchRef.current === e.target.closest("#search-icon")) // if e.target.closest() returns null. the statement returns false which is futher inverted
+      searchRef.current !== e.target.closest("#search-icon")
     ) {
       setIsSearchBarOpen(false);
     }
+
+    // console.log(
+    //   searchBarRef.current,
+    //   searchRef.current,
+    //   e.target.closest("#search-icon")
+    // );
   }
 
   function handleOpenSearchBar() {
@@ -154,6 +160,7 @@ function Navbar() {
           {/* Searchbar , profile, cart */}
           <div className="flex items-center gap-5 md:gap-5 justify-between">
             <div
+              ref={searchRef}
               id="search-icon"
               onClick={handleOpenSearchBar}
               className="hidden md:block text-[#AACB22] text-xl bg-white p-3 rounded-full cursor-pointer hover:bg-[#AACB22] hover:text-white transition-all duration-300"

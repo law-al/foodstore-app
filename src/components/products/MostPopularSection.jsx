@@ -54,7 +54,7 @@ function MostPopularSection() {
   ];
 
   return (
-    <section className="mx-auto px-4 md:py-[100px] pt-0 md:pt-0 md:px-[150px]">
+    <section className="mx-auto px-[150px] md:py-[100px] pt-0 md:pt-0 md:px-[150px]">
       <div className="">
         <p className="text-center text-2xl font-semibold mb-6 text-[var(--color-main)]">
           Most Poupular
