@@ -8,7 +8,8 @@ import WhatWeOfferSection from "../components/products/WhatWeOfferSection";
 
 function Home() {
   return (
-    <div>
+    <>
+      {/* Cart Drawer Section */}
       <HomeHero />
       <ShopnowSection />
       <MostPopularSection />
@@ -49,7 +50,7 @@ function Home() {
       <WhatWeOfferSection />
       <BestSellerSection />
       <Testimonial />
-    </div>
+    </>
   );
 }
 

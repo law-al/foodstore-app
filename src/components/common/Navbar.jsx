@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate, useSearchParams } from "react-router";
 import Logo from "../../assets/Home/Logo.png";
 import { FaCaretDown, FaSearch } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
@@ -8,13 +8,17 @@ import { FaCartShopping } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
 
-function Navbar() {
+function Navbar({ handleCartMenu }) {
   const [openAbout, setOpenAbout] = useState(false);
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const searchBarRef = useRef(null);
   const searchRef = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -40,11 +44,19 @@ function Navbar() {
 
   function handleOpenSearchBar() {
     setIsSearchBarOpen(true);
+    searchBarRef.current.querySelector("#search").focus();
+  }
+
+  function handleSearch(e) {
+    setSearch(e.target.value);
   }
 
   function handleSearchSubmit(e) {
     e.preventDefault();
+    setSearch("");
+    setSearchParams({ search });
     setIsSearchBarOpen(false);
+    navigate(`shop/?search=${search}`);
   }
 
   return (
@@ -170,7 +182,10 @@ function Navbar() {
             <div className="text-[#AACB22] text-[18px] md:text-xl bg-white p-1 md:p-3 rounded-full cursor-pointer hover:bg-[#AACB22] hover:text-white transition-all duration-300">
               <FaUser />
             </div>
-            <div className="text-[#AACB22] text-xl bg-white p-1 md:p-3 rounded-full cursor-pointer hover:bg-[#AACB22] hover:text-white transition-all duration-300 relative">
+            <div
+              onClick={handleCartMenu}
+              className="text-[#AACB22] text-xl bg-white p-1 md:p-3 rounded-full cursor-pointer hover:bg-[#AACB22] hover:text-white transition-all duration-300 relative"
+            >
               <FaCartShopping />
               <p className="absolute  bg-black text-[10px] rounded-full p-2 w-3 h-3 flex items-center justify-center -top-1 left-6">
                 2
@@ -201,7 +216,9 @@ function Navbar() {
           <input
             type="text"
             name="search"
-            id=""
+            value={search}
+            onChange={handleSearch}
+            id="search"
             placeholder="Search Product"
             className={`w-[700px] bg-white p-2 pl-4 pr-6 rounded-xl focus:outline outline-[#AACB22]`}
           />

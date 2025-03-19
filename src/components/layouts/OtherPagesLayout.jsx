@@ -1,11 +1,11 @@
 import { Outlet } from "react-router";
-import Navbar from "../common/Navbar";
+import OtherPagesHero from "../misc/OtherPagesHero";
 import Footer from "../common/Footer";
 
 function OtherPagesLayout() {
   return (
     <div>
-      <Navbar />
+      <OtherPagesHero />
       <Outlet />
       <Footer />
     </div>

@@ -1,5 +1,267 @@
+import { useEffect, useState } from "react";
+import ShopGrid from "../components/products/ShopGrid";
+import { useSearchParams } from "react-router";
+
+const products = [
+  {
+    id: 1,
+    name: "Orange Beverage",
+    onSale: true,
+    price: 15,
+    discountPrice: 12,
+    image: "https://picsum.photos/100/100?random=1",
+  },
+  {
+    id: 2,
+    name: "Body Lotion",
+    onSale: true,
+    price: 45,
+    discountPrice: 12,
+    image: "https://picsum.photos/100/100?random=2",
+  },
+  {
+    id: 3,
+    name: "Dozen Eggs",
+    onSale: true,
+    price: 20,
+    discountPrice: 12,
+    image: "https://picsum.photos/100/100?random=3",
+  },
+  {
+    id: 4,
+    name: "Cooking Oil",
+    onSale: true,
+    price: 5,
+    discountPrice: 2.5,
+    image: "https://picsum.photos/100/100?random=4",
+  },
+  {
+    id: 5,
+    name: "SmooRed Pepper",
+    onSale: true,
+    price: 25,
+    discountPrice: 22,
+    image: "https://picsum.photos/100/100?random=5",
+  },
+  {
+    id: 6,
+    name: "Fresh Bread",
+    onSale: true,
+    price: 11,
+    discountPrice: 10,
+    image: "https://picsum.photos/100/100?random=6",
+  },
+  {
+    id: 7,
+    name: "Orange Beverage",
+    onSale: true,
+    price: 15,
+    discountPrice: 12,
+    image: "https://picsum.photos/100/100?random=1",
+  },
+  {
+    id: 8,
+    name: "Body Lotion",
+    onSale: true,
+    price: 45,
+    discountPrice: 12,
+    image: "https://picsum.photos/100/100?random=2",
+  },
+  {
+    id: 9,
+    name: "Dozen Eggs",
+    onSale: true,
+    price: 20,
+    discountPrice: 12,
+    image: "https://picsum.photos/100/100?random=3",
+  },
+  {
+    id: 10,
+    name: "Cooking Oil",
+    onSale: true,
+    price: 5,
+    discountPrice: 2.5,
+    image: "https://picsum.photos/100/100?random=4",
+  },
+  {
+    id: 11,
+    name: "SmooRed Pepper",
+    onSale: true,
+    price: 25,
+    discountPrice: 22,
+    image: "https://picsum.photos/100/100?random=5",
+  },
+  {
+    id: 12,
+    name: "Fresh Bread",
+    onSale: true,
+    price: 11,
+    discountPrice: 10,
+    image: "https://picsum.photos/100/100?random=6",
+  },
+];
+
 function Shop() {
-  return <div>Shop</div>;
+  const [filters, setFilters] = useState({
+    category: "",
+    sort: "default",
+    page: 1,
+    search: "",
+  });
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // 2) set object coming from params to the filter
+  // Set filters from URL params on component mount
+  useEffect(() => {
+    const params = Object.fromEntries([...searchParams]);
+
+    setFilters({
+      category: params.category || "",
+      sort: params.sort || "default",
+      page: +params.page || 1,
+      search: params.search || "",
+    });
+  }, [searchParams]);
+
+  // Updates search params based on filters
+  useEffect(() => {
+    const params = new URLSearchParams();
+    Object.keys(filters).forEach((key) => {
+      if (filters[key]) params.append(key, filters[key]);
+    });
+    setSearchParams(params);
+  }, [filters]);
+
+  function handleOptionChange(e) {
+    setFilters((prev) => ({ ...prev, sort: e.target.value }));
+  }
+
+  function handleCategoryChange(category) {
+    setFilters((prev) => ({ ...prev, category }));
+  }
+
+  function handlePage(action) {
+    setFilters((prev) => {
+      if (action === "left" && prev.page > 1) {
+        return { ...prev, page: prev.page - 1 };
+      } else if (action === "right" && prev.page < pages) {
+        return { ...prev, page: prev.page + 1 };
+      }
+      return prev;
+    });
+  }
+
+  function handlePageChange(pageNumber) {
+    setFilters((prev) => ({ ...prev, page: pageNumber }));
+  }
+
+  const categories = ["all", "food", "fruit", "health", "meat", "dairy"];
+
+  // console.log(products.length);
+  let pages = Math.ceil(products.length / 4);
+
+  return (
+    <section className="px-[150px] py-[100px] relative z-[50]">
+      <div className="w-full flex justify-between items-center mb-20">
+        <p>Showing all 12 result</p>
+
+        <div className="flex items-center gap-4">
+          {categories.map((category, i) => (
+            <div
+              key={i}
+              onClick={() => handleCategoryChange(category)}
+              className={`capitalize font-semibold cursor-pointer hover:text-[var(--color-main)] transition-all duration-150 ${
+                filters.category === category
+                  ? "text-[var(--color-main)]"
+                  : "text-black"
+              }`}
+            >
+              {category}
+            </div>
+          ))}
+        </div>
+
+        <select
+          name="sort"
+          id="sort-options"
+          value={filters.sort}
+          onChange={handleOptionChange}
+          className="border border-black p-3"
+        >
+          <option value="default">Default sorting</option>
+          <option value="popularity">Sort by Popularity</option>
+          <option value="rating">Sort by average rating</option>
+          <option value="latest">Sort by latest</option>
+          <option value="priceAsc">Sort by price: low to high</option>
+          <option value="priceDesc">Sort by price: high to low</option>
+        </select>
+      </div>
+
+      <div className="mb-8">
+        <ShopGrid products={products} />
+      </div>
+
+      <div className="flex items-center justify-center gap-8">
+        <div className="cursor-pointer" onClick={() => handlePage("left")}>
+          &larr;
+        </div>
+
+        {(() => {
+          // If the current page (filters.page) is near the beginning, show pages 1-10.
+          // If the current page is near the end, show the last 10 pages.
+          // Otherwise, the current page stays in the middle, displaying 5 pages before and 5 after.
+
+          // Calculate the range to display
+          let start, end;
+
+          if (pages <= 10) {
+            // If we have 10 or fewer pages, show all
+            start = 0;
+            end = pages;
+          } else {
+            // Calculate the range based on current page
+            // Show current page in the middle when possible
+            const halfDisplay = 5;
+
+            if (filters.page <= halfDisplay) {
+              // Near the beginning
+              start = 0;
+              end = 10;
+            } else if (filters.page > pages - halfDisplay) {
+              // Near the end
+              start = pages - 10;
+              end = pages;
+            } else {
+              // Somewhere in the middle
+              start = filters.page - halfDisplay - 1;
+              end = filters.page + halfDisplay - 1;
+            }
+          }
+
+          return Array.from({ length: end - start }, (_, i) => {
+            const pageNumber = start + i + 1;
+            return (
+              <div
+                key={pageNumber}
+                onClick={() => handlePageChange(pageNumber)}
+                className={`text-xl font-semibold w-[40px] h-[40px] flex items-center justify-center rounded-full cursor-pointer ${
+                  filters.page === pageNumber
+                    ? "bg-[var(--color-main)] text-white "
+                    : ""
+                }`}
+              >
+                {pageNumber}
+              </div>
+            );
+          });
+        })()}
+        <div onClick={() => handlePage("right")} className="cursor-pointer">
+          &rarr;
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default Shop;

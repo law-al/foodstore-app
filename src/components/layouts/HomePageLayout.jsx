@@ -3,10 +3,11 @@ import Footer from "../common/Footer";
 
 function HomePageLayout() {
   return (
-    <div>
+    <>
       <Home />
+
       <Footer />
-    </div>
+    </>
   );
 }
 
