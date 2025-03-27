@@ -5,7 +5,7 @@ function ShopGrid({ products }) {
     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
       {products.map((product) => (
         <div
-          key={product.id}
+          key={product._id}
           className="p-10 bg-[#F5F9FA] border border-transparent min-h-[500px] flex flex-col items-center gap-3 hover:border-[var(--color-main)] transition-all duration-200"
         >
           <p
@@ -16,15 +16,15 @@ function ShopGrid({ products }) {
             Sale!
           </p>
           <Link
-            to={`products/${product.id}`}
+            to={`products/${product._id}`}
             className=" flex flex-col justify-between items-center relative gap-3"
           >
             <img
-              src={product.image}
+              src={product.images[0]}
               alt={`${product.name} Img`}
               className="w-[200px] h-[200px]"
             />
-            <span className="text-2xl font-semibold text-[var(--color-sec)]">
+            <span className="text-[15px] font-semibold text-[var(--color-sec)]">
               {product.name}
             </span>
             <div className="flex gap-2 text-[18px]">

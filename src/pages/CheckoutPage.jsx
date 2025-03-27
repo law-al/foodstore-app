@@ -244,7 +244,7 @@ function CheckoutPage() {
             </div>
           </div>
 
-          <div className="p-3 flex justify-between font-bold">
+          <div className="p-3 text-xl flex justify-between font-bold">
             <p>Total</p>
             <p>$55</p>
           </div>

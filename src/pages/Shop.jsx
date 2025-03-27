@@ -1,118 +1,32 @@
 import { useEffect, useState } from "react";
 import ShopGrid from "../components/products/ShopGrid";
 import { useSearchParams } from "react-router";
-
-const products = [
-  {
-    id: 1,
-    name: "Orange Beverage",
-    onSale: true,
-    price: 15,
-    discountPrice: 12,
-    image: "https://picsum.photos/100/100?random=1",
-  },
-  {
-    id: 2,
-    name: "Body Lotion",
-    onSale: true,
-    price: 45,
-    discountPrice: 12,
-    image: "https://picsum.photos/100/100?random=2",
-  },
-  {
-    id: 3,
-    name: "Dozen Eggs",
-    onSale: true,
-    price: 20,
-    discountPrice: 12,
-    image: "https://picsum.photos/100/100?random=3",
-  },
-  {
-    id: 4,
-    name: "Cooking Oil",
-    onSale: true,
-    price: 5,
-    discountPrice: 2.5,
-    image: "https://picsum.photos/100/100?random=4",
-  },
-  {
-    id: 5,
-    name: "SmooRed Pepper",
-    onSale: true,
-    price: 25,
-    discountPrice: 22,
-    image: "https://picsum.photos/100/100?random=5",
-  },
-  {
-    id: 6,
-    name: "Fresh Bread",
-    onSale: true,
-    price: 11,
-    discountPrice: 10,
-    image: "https://picsum.photos/100/100?random=6",
-  },
-  {
-    id: 7,
-    name: "Orange Beverage",
-    onSale: true,
-    price: 15,
-    discountPrice: 12,
-    image: "https://picsum.photos/100/100?random=1",
-  },
-  {
-    id: 8,
-    name: "Body Lotion",
-    onSale: true,
-    price: 45,
-    discountPrice: 12,
-    image: "https://picsum.photos/100/100?random=2",
-  },
-  {
-    id: 9,
-    name: "Dozen Eggs",
-    onSale: true,
-    price: 20,
-    discountPrice: 12,
-    image: "https://picsum.photos/100/100?random=3",
-  },
-  {
-    id: 10,
-    name: "Cooking Oil",
-    onSale: true,
-    price: 5,
-    discountPrice: 2.5,
-    image: "https://picsum.photos/100/100?random=4",
-  },
-  {
-    id: 11,
-    name: "SmooRed Pepper",
-    onSale: true,
-    price: 25,
-    discountPrice: 22,
-    image: "https://picsum.photos/100/100?random=5",
-  },
-  {
-    id: 12,
-    name: "Fresh Bread",
-    onSale: true,
-    price: 11,
-    discountPrice: 10,
-    image: "https://picsum.photos/100/100?random=6",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { getProductsByFilter } from "@/redux/slices/productSlice";
 
 function Shop() {
   const [filters, setFilters] = useState({
-    category: "",
+    category: "all",
     sort: "default",
     page: 1,
     search: "",
   });
-
+  const dispatch = useDispatch();
+  const { products, loading, error, totalItems } = useSelector(
+    (state) => state.products
+  );
   const [searchParams, setSearchParams] = useSearchParams();
+  // console.log(products.length);
 
-  // 2) set object coming from params to the filter
-  // Set filters from URL params on component mount
+  useEffect(() => {
+    if (filters) {
+      dispatch(getProductsByFilter(filters));
+    }
+  }, [dispatch, filters]);
+
+  // Update filters from URL params
+  // Get query from URL and update the filter
+  // if some query does not exist, set the filter to default
   useEffect(() => {
     const params = Object.fromEntries([...searchParams]);
 
@@ -124,22 +38,26 @@ function Shop() {
     });
   }, [searchParams]);
 
-  // Updates search params based on filters
+  // Updates url when filters changed
+  // use URLSearchParms when you want to ulter the url
   useEffect(() => {
     const params = new URLSearchParams();
     Object.keys(filters).forEach((key) => {
-      if (filters[key]) params.append(key, filters[key]);
+      if (filters[key]) params.set(key, filters[key]);
     });
     setSearchParams(params);
   }, [filters]);
 
   function handleOptionChange(e) {
-    setFilters((prev) => ({ ...prev, sort: e.target.value }));
+    setFilters((prev) => ({ ...prev, sort: e.target.value, page: 1 }));
   }
 
   function handleCategoryChange(category) {
-    setFilters((prev) => ({ ...prev, category }));
+    setFilters((prev) => ({ ...prev, category, page: 1 }));
   }
+
+  // console.log(products.length);
+  let pages = Math.ceil(totalItems / 8);
 
   function handlePage(action) {
     setFilters((prev) => {
@@ -158,13 +76,10 @@ function Shop() {
 
   const categories = ["all", "food", "fruit", "health", "meat", "dairy"];
 
-  // console.log(products.length);
-  let pages = Math.ceil(products.length / 4);
-
   return (
     <section className="px-[150px] py-[100px] relative z-[50]">
       <div className="w-full flex justify-between items-center mb-20">
-        <p>Showing all 12 result</p>
+        <p>Showing all {totalItems} result</p>
 
         <div className="flex items-center gap-4">
           {categories.map((category, i) => (
@@ -198,68 +113,78 @@ function Shop() {
         </select>
       </div>
 
-      <div className="mb-8">
-        <ShopGrid products={products} />
-      </div>
-
-      <div className="flex items-center justify-center gap-8">
-        <div className="cursor-pointer" onClick={() => handlePage("left")}>
-          &larr;
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error loading products</p>
+      ) : products.length > 0 ? (
+        <div className="mb-8">
+          <ShopGrid products={products} />
         </div>
+      ) : (
+        <p>No Products</p>
+      )}
 
-        {(() => {
-          // If the current page (filters.page) is near the beginning, show pages 1-10.
-          // If the current page is near the end, show the last 10 pages.
-          // Otherwise, the current page stays in the middle, displaying 5 pages before and 5 after.
+      {products?.length > 0 && (
+        <div className="flex items-center justify-center gap-8">
+          <div className="cursor-pointer" onClick={() => handlePage("left")}>
+            &larr;
+          </div>
 
-          // Calculate the range to display
-          let start, end;
+          {(() => {
+            // If the current page (filters.page) is near the beginning, show pages 1-10.
+            // If the current page is near the end, show the last 10 pages.
+            // Otherwise, the current page stays in the middle, displaying 5 pages before and 5 after.
 
-          if (pages <= 10) {
-            // If we have 10 or fewer pages, show all
-            start = 0;
-            end = pages;
-          } else {
-            // Calculate the range based on current page
-            // Show current page in the middle when possible
-            const halfDisplay = 5;
+            // Calculate the range to display
+            let start, end;
 
-            if (filters.page <= halfDisplay) {
-              // Near the beginning
+            if (pages <= 10) {
+              // If we have 10 or fewer pages, show all
               start = 0;
-              end = 10;
-            } else if (filters.page > pages - halfDisplay) {
-              // Near the end
-              start = pages - 10;
               end = pages;
             } else {
-              // Somewhere in the middle
-              start = filters.page - halfDisplay - 1;
-              end = filters.page + halfDisplay - 1;
-            }
-          }
+              // Calculate the range based on current page
+              // Show current page in the middle when possible
+              const halfDisplay = 5;
 
-          return Array.from({ length: end - start }, (_, i) => {
-            const pageNumber = start + i + 1;
-            return (
-              <div
-                key={pageNumber}
-                onClick={() => handlePageChange(pageNumber)}
-                className={`text-xl font-semibold w-[40px] h-[40px] flex items-center justify-center rounded-full cursor-pointer ${
-                  filters.page === pageNumber
-                    ? "bg-[var(--color-main)] text-white "
-                    : ""
-                }`}
-              >
-                {pageNumber}
-              </div>
-            );
-          });
-        })()}
-        <div onClick={() => handlePage("right")} className="cursor-pointer">
-          &rarr;
+              if (filters.page <= halfDisplay) {
+                // Near the beginning
+                start = 0;
+                end = 10;
+              } else if (filters.page > pages - halfDisplay) {
+                // Near the end
+                start = pages - 10;
+                end = pages;
+              } else {
+                // Somewhere in the middle
+                start = filters.page - halfDisplay - 1;
+                end = filters.page + halfDisplay - 1;
+              }
+            }
+
+            return Array.from({ length: end - start }, (_, i) => {
+              const pageNumber = start + i + 1;
+              return (
+                <div
+                  key={pageNumber}
+                  onClick={() => handlePageChange(pageNumber)}
+                  className={`text-xl font-semibold w-[40px] h-[40px] flex items-center justify-center rounded-full cursor-pointer ${
+                    filters.page === pageNumber
+                      ? "bg-[var(--color-main)] text-white "
+                      : ""
+                  }`}
+                >
+                  {pageNumber}
+                </div>
+              );
+            });
+          })()}
+          <div onClick={() => handlePage("right")} className="cursor-pointer">
+            &rarr;
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

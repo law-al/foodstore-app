@@ -53,10 +53,25 @@ function Navbar({ handleCartMenu }) {
 
   function handleSearchSubmit(e) {
     e.preventDefault();
-    setSearch("");
+    setSearch(search);
     setSearchParams({ search });
     setIsSearchBarOpen(false);
     navigate(`shop/?search=${search}`);
+  }
+
+  const user = {
+    name: "Lawal",
+    role: "customer",
+  };
+
+  function handleProfile() {
+    if (!user) {
+      navigate("/login");
+    } else if (user && user.role === "customer") {
+      navigate("/profile");
+    } else {
+      return;
+    }
   }
 
   return (
@@ -179,7 +194,10 @@ function Navbar({ handleCartMenu }) {
             >
               <FiSearch />
             </div>
-            <div className="text-[#AACB22] text-[18px] md:text-xl bg-white p-1 md:p-3 rounded-full cursor-pointer hover:bg-[#AACB22] hover:text-white transition-all duration-300">
+            <div
+              onClick={() => handleProfile()}
+              className="text-[#AACB22] text-[18px] md:text-xl bg-white p-1 md:p-3 rounded-full cursor-pointer hover:bg-[#AACB22] hover:text-white transition-all duration-300"
+            >
               <FaUser />
             </div>
             <div
