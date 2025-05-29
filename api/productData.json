@@ -1,0 +1,342 @@
+[
+  {
+    "name": "Spicy Tuna Roll",
+    "price": 65,
+    "description": "Fresh tuna mixed with spicy mayo, wrapped in sushi rice and nori, served with soy sauce.",
+    "images": [
+      "https://picsum.photos/200/300?random=17",
+      "https://picsum.photos/200/300?random=18"
+    ],
+    "category": "Seafood",
+    "tags": ["sushi", "spicy", "Japanese"],
+    "stocks": 30,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 28,
+    "sku": "#781"
+  },
+  {
+    "name": "Chocolate Croissant",
+    "price": 22,
+    "description": "A flaky, buttery croissant filled with rich dark chocolate, freshly baked.",
+    "images": [
+      "https://picsum.photos/200/300?random=19",
+      "https://picsum.photos/200/300?random=20"
+    ],
+    "category": "Bakery",
+    "tags": ["sweet", "pastry", "indulgent"],
+    "stocks": 50,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 35,
+    "sku": "#129"
+  },
+  {
+    "name": "Quinoa Bowl",
+    "price": 48,
+    "description": "A nutritious bowl of quinoa, roasted vegetables, and a tahini dressing.",
+    "images": [
+      "https://picsum.photos/200/300?random=21",
+      "https://picsum.photos/200/300?random=22"
+    ],
+    "category": "Health",
+    "tags": ["vegan", "gluten-free", "protein-rich"],
+    "stocks": 40,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 32,
+    "sku": "#345"
+  },
+  {
+    "name": "Beef Burger",
+    "price": 80,
+    "description": "Juicy beef patty with cheddar cheese, lettuce, tomato, and a special sauce on a brioche bun.",
+    "images": [
+      "https://picsum.photos/200/300?random=23",
+      "https://picsum.photos/200/300?random=24"
+    ],
+    "category": "Food",
+    "tags": ["grilled", "hearty", "savory"],
+    "stocks": 45,
+    "isAvailable": false,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 41,
+    "sku": "#672"
+  },
+  {
+    "name": "Mango Smoothie",
+    "price": 35,
+    "description": "A refreshing blend of ripe mangoes, yogurt, and a hint of honey.",
+    "images": [
+      "https://picsum.photos/200/300?random=25",
+      "https://picsum.photos/200/300?random=26"
+    ],
+    "category": "Beverage",
+    "tags": ["sweet", "healthy", "tropical"],
+    "stocks": 55,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 25,
+    "sku": "#3287"
+  },
+  {
+    "name": "Garlic Bread",
+    "price": 20,
+    "description": "Toasted bread topped with garlic, butter, and a sprinkle of parsley.",
+    "images": [
+      "https://picsum.photos/200/300?random=27",
+      "https://picsum.photos/200/300?random=28"
+    ],
+    "category": "Bakery",
+    "tags": ["savory", "crisp", "side-dish"],
+    "stocks": 60,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 18,
+    "sku": "#234"
+  },
+  {
+    "name": "Grilled Salmon",
+    "price": 95,
+    "description": "Perfectly grilled salmon fillet with a lemon herb glaze, served with asparagus.",
+    "images": [
+      "https://picsum.photos/200/300?random=29",
+      "https://picsum.photos/200/300?random=30"
+    ],
+    "category": "Seafood",
+    "tags": ["healthy", "omega-3", "grilled"],
+    "stocks": 25,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 37,
+    "sku": "#567"
+  },
+  {
+    "name": "Veggie Stir-Fry",
+    "price": 45,
+    "description": "A colorful mix of stir-fried vegetables in a light soy-ginger sauce, served with rice.",
+    "images": [
+      "https://picsum.photos/200/300?random=31",
+      "https://picsum.photos/200/300?random=32"
+    ],
+    "category": "Health",
+    "tags": ["vegan", "low-calorie", "Asian"],
+    "stocks": 38,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 22,
+    "sku": "#890"
+  },
+  {
+    "name": "Pork Ribs",
+    "price": 110,
+    "description": "Slow-cooked pork ribs glazed with smoky BBQ sauce, tender and flavorful.",
+    "images": [
+      "https://picsum.photos/200/300?random=33",
+      "https://picsum.photos/200/300?random=34"
+    ],
+    "category": "Meat",
+    "tags": ["smoky", "juicy", "savory"],
+    "stocks": 20,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 40,
+    "sku": "#123"
+  },
+  {
+    "name": "Greek Yogurt",
+    "price": 12,
+    "description": "Thick and creamy Greek yogurt, plain and unsweetened, perfect for toppings or dips.",
+    "images": [
+      "https://picsum.photos/200/300?random=35",
+      "https://picsum.photos/200/300?random=36"
+    ],
+    "category": "Dairy",
+    "tags": ["probiotic", "high-protein", "versatile"],
+    "stocks": 65,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 30,
+    "sku": "#456"
+  },
+  {
+    "name": "Chicken Noodle Soup",
+    "price": 38,
+    "description": "Hearty soup with tender chicken, noodles, and fresh vegetables in a savory broth.",
+    "images": [
+      "https://picsum.photos/200/300?random=37",
+      "https://picsum.photos/200/300?random=38"
+    ],
+    "category": "Food",
+    "tags": ["comfort", "warm", "savory"],
+    "stocks": 50,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 27,
+    "sku": "#789"
+  },
+  {
+    "name": "Dark Chocolate Bar",
+    "price": 28,
+    "description": "Rich 70% dark chocolate bar, bittersweet and smooth, perfect for a treat.",
+    "images": [
+      "https://picsum.photos/200/300?random=39",
+      "https://picsum.photos/200/300?random=40"
+    ],
+    "category": "Dessert",
+    "tags": ["sweet", "antioxidant", "indulgent"],
+    "stocks": 70,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 33,
+    "sku": "#321"
+  },
+  {
+    "name": "Roasted Almonds",
+    "price": 35,
+    "description": "Crunchy roasted almonds lightly salted, a healthy and satisfying snack.",
+    "images": [
+      "https://picsum.photos/200/300?random=41",
+      "https://picsum.photos/200/300?random=42"
+    ],
+    "category": "Health",
+    "tags": ["nutty", "protein-rich", "low-carb"],
+    "stocks": 45,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 19,
+    "sku": "#654"
+  },
+  {
+    "name": "Pepperoni Pizza",
+    "price": 78,
+    "description": "A classic pizza with spicy pepperoni, mozzarella, and tomato sauce on a thick crust.",
+    "images": [
+      "https://picsum.photos/200/300?random=43",
+      "https://picsum.photos/200/300?random=44"
+    ],
+    "category": "Food",
+    "tags": ["spicy", "cheesy", "Italian"],
+    "stocks": 35,
+    "isAvailable": false,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 38,
+    "sku": "#987"
+  },
+  {
+    "name": "Green Tea",
+    "price": 15,
+    "description": "Pure green tea leaves brewed for a light, refreshing, and antioxidant-rich drink.",
+    "images": [
+      "https://picsum.photos/200/300?random=45",
+      "https://picsum.photos/200/300?random=46"
+    ],
+    "category": "Beverage",
+    "tags": ["healthy", "refreshing", "caffeine"],
+    "stocks": 80,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 24,
+    "sku": "#147"
+  },
+  {
+    "name": "Lamb Chops",
+    "price": 130,
+    "description": "Tender lamb chops grilled with rosemary and garlic, served with a mint sauce.",
+    "images": [
+      "https://picsum.photos/200/300?random=47",
+      "https://picsum.photos/200/300?random=48"
+    ],
+    "category": "Meat",
+    "tags": ["grilled", "savory", "premium"],
+    "stocks": 15,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 36,
+    "sku": "#258"
+  },
+  {
+    "name": "Banana Bread",
+    "price": 30,
+    "description": "Moist and sweet banana bread made with ripe bananas and a hint of cinnamon.",
+    "images": [
+      "https://picsum.photos/200/300?random=49",
+      "https://picsum.photos/200/300?random=50"
+    ],
+    "category": "Bakery",
+    "tags": ["sweet", "homemade", "comfort"],
+    "stocks": 40,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 26,
+    "sku": "#369"
+  },
+  {
+    "name": "Shrimp Cocktail",
+    "price": 55,
+    "description": "Chilled shrimp served with a tangy cocktail sauce and lemon wedges.",
+    "images": [
+      "https://picsum.photos/200/300?random=51",
+      "https://picsum.photos/200/300?random=52"
+    ],
+    "category": "Seafood",
+    "tags": ["fresh", "light", "appetizer"],
+    "stocks": 30,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 23,
+    "sku": "#741"
+  },
+  {
+    "name": "Coconut Water",
+    "price": 20,
+    "description": "Pure coconut water, naturally hydrating and packed with electrolytes.",
+    "images": [
+      "https://picsum.photos/200/300?random=53",
+      "https://picsum.photos/200/300?random=54"
+    ],
+    "category": "Beverage",
+    "tags": ["hydrating", "natural", "tropical"],
+    "stocks": 90,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 29,
+    "sku": "#852"
+  },
+  {
+    "name": "Cheese Platter",
+    "price": 85,
+    "description": "A selection of aged cheddar, brie, and gouda served with crackers and grapes.",
+    "images": [
+      "https://picsum.photos/200/300?random=55",
+      "https://picsum.photos/200/300?random=56"
+    ],
+    "category": "Dairy",
+    "tags": ["savory", "party", "gourmet"],
+    "stocks": 25,
+    "isAvailable": true,
+    "reviews": [],
+    "averageRating": null,
+    "reviewsCount": 34,
+    "sku": "#963"
+  }
+]
