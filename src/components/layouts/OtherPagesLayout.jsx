@@ -4,7 +4,7 @@ import Footer from "../common/Footer";
 
 function OtherPagesLayout() {
   return (
-    <div>
+    <div className="">
       <OtherPagesHero />
       <Outlet />
       <Footer />

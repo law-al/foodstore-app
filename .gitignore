@@ -18,9 +18,19 @@ dist-ssr
 .idea
 .DS_Store
 .env
+# Ignore .env files in both client and api folders
+client/.env
+client/.env.*
+
+api/.env
+api/.env.*
+
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*.env
+
+
 

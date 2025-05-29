@@ -18,6 +18,8 @@ function UserProfile() {
   const { user } = useSelector((state) => state.auth);
   const fileRef = useRef(null);
 
+  console.log(user);
+
   function handleProfileData(e) {
     const { value, name } = e.target;
     setProfileData((prev) => {

@@ -14,6 +14,16 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import PrivateRoute from "./pages/PrivateRoute";
 import Shop from "./pages/Shop";
+import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
+import AdminLayout from "./components/layouts/AdminLayout";
+import AdminOrder from "./components/admin/AdminOrder";
+import AdminUsers from "./components/admin/AdminUsers";
+import AdminWallet from "./components/admin/AdminWallet";
+import AdminSettings from "./components/admin/AdminSettings";
+import AdminDashboard from "./components/admin/AdminDashboard";
+import AdminOrderDetails from "./components/admin/AdminOrderDetails";
+import AdminUpdateUser from "./components/admin/AdminUpdateUser";
+import CustomerDetails from "./components/admin/CustomerDetails";
 
 function App() {
   return (
@@ -32,11 +42,23 @@ function App() {
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
+          <Route path="checkout-success" element={<CheckoutSuccessPage />} />
+          <Route path="profile" element={<UserProfilePage />} />
 
           {/* Protected Routes */}
-          <Route element={<PrivateRoute />}>
-            <Route path="profile" element={<UserProfilePage />} />
-          </Route>
+          {/* <Route element={<PrivateRoute />}>
+          </Route> */}
+        </Route>
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="order" element={<AdminOrder />} />
+          <Route path="order/:orderId" element={<AdminOrderDetails />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="users/edit" element={<AdminUpdateUser />} />
+          <Route path="users/customer/detail" element={<CustomerDetails />} />
+          <Route path="wallet" element={<AdminWallet />} />
+          <Route path="settings" element={<AdminSettings />} />
         </Route>
       </Routes>
     </Provider>

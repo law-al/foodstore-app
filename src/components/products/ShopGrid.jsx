@@ -1,6 +1,34 @@
+import { addProductToCart } from "@/redux/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
+import { toast } from "sonner";
 
 function ShopGrid({ products }) {
+  const { cart } = useSelector((state) => state.cart);
+  const { user, guestId } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  async function handleAddToCartShort(productId) {
+    try {
+      // Dispatch action with explicit conversion
+      const response = await dispatch(
+        addProductToCart({
+          productId,
+          userId: user?._id,
+          guestId,
+          quantity: 1,
+        })
+      ).unwrap();
+      if (response.success === true) {
+        toast.success("Item added to cart", { duration: 1000 });
+      }
+    } catch (error) {
+      // console.error(error);
+      const errorMessage = error.message || "System error";
+      toast.error(errorMessage, { duration: 1000 });
+    }
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
       {products.map((product) => (
@@ -46,9 +74,16 @@ function ShopGrid({ products }) {
               </p>
             </div>
           </Link>
-          <button className="mt-3 py-0.5 px-2 text-white bg-[var(--color-sec)] font-semibold cursor-pointer">
-            Add to cart
-          </button>
+          {product.stocks > 1 ? (
+            <button
+              className="mt-3 py-0.5 px-2 text-white bg-[var(--color-sec)] font-semibold cursor-pointer"
+              onClick={() => handleAddToCartShort(product._id)}
+            >
+              Add to cart
+            </button>
+          ) : (
+            <p>Out of stock</p>
+          )}
         </div>
       ))}
     </div>

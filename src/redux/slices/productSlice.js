@@ -135,7 +135,7 @@ const productsSlice = createSlice({
       })
       .addCase(getProductsByFilter.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload.message;
         state.totalItems = 0;
       })
 
@@ -149,7 +149,7 @@ const productsSlice = createSlice({
       })
       .addCase(getProductDetails.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload.message;
       })
 
       .addCase(bestSeller.pending, (state) => {

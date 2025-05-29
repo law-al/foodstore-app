@@ -7,13 +7,18 @@ import { VscMenu } from "react-icons/vsc";
 import { FaCartShopping } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
-function Navbar({ handleCartMenu }) {
+function Navbar({ handleCartMenuOpen }) {
   const [openAbout, setOpenAbout] = useState(false);
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [search, setSearch] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
+  const initialQuery = searchParams.get("search") || "";
+  const [search, setSearch] = useState(initialQuery);
+
+  const cartState = useSelector((state) => state.cart);
+  const authState = useSelector((state) => state.auth);
 
   const searchBarRef = useRef(null);
   const searchRef = useRef(null);
@@ -26,6 +31,8 @@ function Navbar({ handleCartMenu }) {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [isSearchBarOpen]);
 
+  const cartQuantity = cartState.cart.products.length;
+
   function handleClickOutside(e) {
     // console.log(searchRef.current === e.target.closest("#search-icon"));
     if (
@@ -34,12 +41,6 @@ function Navbar({ handleCartMenu }) {
     ) {
       setIsSearchBarOpen(false);
     }
-
-    // console.log(
-    //   searchBarRef.current,
-    //   searchRef.current,
-    //   e.target.closest("#search-icon")
-    // );
   }
 
   function handleOpenSearchBar() {
@@ -53,24 +54,17 @@ function Navbar({ handleCartMenu }) {
 
   function handleSearchSubmit(e) {
     e.preventDefault();
-    setSearch(search);
     setSearchParams({ search });
     setIsSearchBarOpen(false);
     navigate(`shop/?search=${search}`);
   }
 
-  const user = {
-    name: "Lawal",
-    role: "customer",
-  };
-
   function handleProfile() {
-    if (!user) {
-      navigate("/login");
-    } else if (user && user.role === "customer") {
-      navigate("/profile");
+    console.log(authState.user);
+    if (!authState.user) {
+      navigate("/login?redirect=profile");
     } else {
-      return;
+      navigate("/profile");
     }
   }
 
@@ -201,12 +195,17 @@ function Navbar({ handleCartMenu }) {
               <FaUser />
             </div>
             <div
-              onClick={handleCartMenu}
+              id="cart-icon"
+              onClick={handleCartMenuOpen}
               className="text-[#AACB22] text-xl bg-white p-1 md:p-3 rounded-full cursor-pointer hover:bg-[#AACB22] hover:text-white transition-all duration-300 relative"
             >
               <FaCartShopping />
-              <p className="absolute  bg-black text-[10px] rounded-full p-2 w-3 h-3 flex items-center justify-center -top-1 left-6">
-                2
+              <p
+                className={`absolute  bg-black text-[10px] rounded-full p-2 w-3 h-3  items-center justify-center -top-1 left-6 ${
+                  cartQuantity === 0 ? "hidden" : "flex"
+                }`}
+              >
+                {cartQuantity}
               </p>
             </div>
 

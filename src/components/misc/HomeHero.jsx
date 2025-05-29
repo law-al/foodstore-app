@@ -12,6 +12,14 @@ function HomeHero() {
     setIsCartMenuOpen(!isCartMenuOpen);
   }
 
+  function handleCartMenuOpen() {
+    setIsCartMenuOpen(true);
+  }
+
+  function handleCartMenuClose() {
+    setIsCartMenuOpen(false);
+  }
+
   return (
     <>
       <div className="relative bg-[var(--bg-hero)] md:bg-[url('/assets/Home-right-img.jpg.jpeg')] bg-cover bg-center bg-no-repeat md:py-[50px] md:px-[150px] w-full min-h-[400px]">
@@ -23,12 +31,12 @@ function HomeHero() {
 
         {/* Navbar */}
         <div className="relative mx-auto w-full z-[20]">
-          <Navbar handleCartMenu={handleCartMenu} />
+          <Navbar handleCartMenuOpen={handleCartMenuOpen} />
         </div>
 
         {/* Cart Menu Open */}
         <CartSection
-          handleCartMenu={handleCartMenu}
+          handleCartMenuClose={handleCartMenuClose}
           isCartMenuOpen={isCartMenuOpen}
         />
 

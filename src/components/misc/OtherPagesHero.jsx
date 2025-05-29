@@ -4,12 +4,17 @@ import UtilsButton from "./UtilsButton";
 import ReadMoreBtn from "./ReadMoreBtn";
 import { useState } from "react";
 import CartSection from "./CartSection";
+import Breadecrumb from "../misc/Breadecrumb";
 
 function OtherPagesHero() {
   const [isCartMenuOpen, setIsCartMenuOpen] = useState(false);
 
-  function handleCartMenu() {
-    setIsCartMenuOpen(!isCartMenuOpen);
+  function handleCartMenuOpen() {
+    setIsCartMenuOpen(true);
+  }
+
+  function handleCartMenuClose() {
+    setIsCartMenuOpen(false);
   }
 
   return (
@@ -23,17 +28,19 @@ function OtherPagesHero() {
 
         {/* Navbar */}
         <div className="relative mx-auto w-full z-[20]">
-          <Navbar handleCartMenu={handleCartMenu} />
+          <Navbar handleCartMenuOpen={handleCartMenuOpen} />
         </div>
 
         {/* Cart Menu Open */}
         <CartSection
-          handleCartMenu={handleCartMenu}
+          handleCartMenuClose={handleCartMenuClose}
           isCartMenuOpen={isCartMenuOpen}
         />
 
         {/* Hero Section */}
         <div className="relative z-[10] mx-auto mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 h-full"></div>
+
+        <Breadecrumb />
       </div>
     </>
   );

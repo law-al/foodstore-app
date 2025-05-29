@@ -1,3 +1,4 @@
+import { addProductToCart } from "@/redux/slices/cartSlice";
 import { getProductDetails } from "@/redux/slices/productSlice";
 import { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
@@ -45,17 +46,18 @@ const promotions = [
 */
 
 function ProductDetails() {
-  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
-  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const [isReviewOpen, setIsReviewOpen] = useState(false);
-  const [mainImage, setMainImage] = useState(null);
-  const [quantity, setQuantity] = useState("");
-
-  const { productId } = useParams();
   const dispatch = useDispatch();
   const { selectedProduct, loading, error } = useSelector(
     (state) => state.products
   );
+  const { productId } = useParams();
+  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [mainImage, setMainImage] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+
+  const { user, guestId } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (productId) {
@@ -65,21 +67,35 @@ function ProductDetails() {
 
   function handleQuantity(e) {
     const value = Number(e.target.value);
-    if (!value || value <= 1) {
-      setQuantity(1);
-    } else {
-      setQuantity(value);
-    }
+
+    setQuantity(value);
   }
 
-  function handleAddToCart() {
+  async function handleAddToCart() {
+    // Early validation
     if (quantity <= 0) {
-      setQuantity(1);
+      toast.error("Quantity must be more than zero", { duration: 1000 });
+      return;
     }
-    toast.success("Item added to cart", {
-      duration: 1000,
-    });
-    return;
+
+    try {
+      // Dispatch action with explicit conversion
+      const response = await dispatch(
+        addProductToCart({
+          productId,
+          userId: user?._id,
+          guestId,
+          quantity: Number(quantity),
+        })
+      ).unwrap();
+      if (response.success === true) {
+        toast.success("Item added to cart", { duration: 1000 });
+      }
+    } catch (error) {
+      // console.error(error);
+      const errorMessage = error.message || "System error";
+      toast.error(errorMessage, { duration: 1000 });
+    }
   }
 
   return (
@@ -159,8 +175,11 @@ function ProductDetails() {
                 className="border border-[var(--color-main)] p-3 w-[15%] rounded-3xl focus:border-[var(--color-main)] focus:outline-0"
               />
               <button
+                disabled={selectedProduct.stocks <= 0}
                 onClick={handleAddToCart}
-                className=" py-3 px-6 rounded-3xl cursor-pointer bg-[var(--color-main)] text-white font-semibold"
+                className={`py-3 px-6 rounded-3xl cursor-pointer bg-[var(--color-main)] text-white font-semibold ${
+                  selectedProduct.stocks <= 0 ? "opacity-50" : "opacity-100"
+                }`}
               >
                 Add to cart
               </button>

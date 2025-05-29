@@ -19,7 +19,8 @@ if (!userAuthenticated) {
 // Async thunk for user login
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
-  async (userData, { rejectedWithValue }) => {
+  async (userData, { rejectWithValue }) => {
+    console.log(userData);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/login`,
@@ -34,7 +35,8 @@ export const loginUser = createAsyncThunk(
 
       return response.data.user;
     } catch (error) {
-      return rejectedWithValue(error.response.data);
+      // console.log(error.response.data.message);
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -42,7 +44,7 @@ export const loginUser = createAsyncThunk(
 // Async thunk for user registration
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async (userData, { rejectedWithValue }) => {
+  async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/register`,
@@ -57,7 +59,7 @@ export const registerUser = createAsyncThunk(
 
       return response.data.user;
     } catch (error) {
-      return rejectedWithValue(error.response.data);
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -65,7 +67,7 @@ export const registerUser = createAsyncThunk(
 // Async thunk for updating user
 export const updateUser = createAsyncThunk(
   "auth/updateUser",
-  async (userData, { rejectedWithValue }) => {
+  async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/update-user`,
@@ -81,7 +83,7 @@ export const updateUser = createAsyncThunk(
 
       return response.data.user;
     } catch (error) {
-      return rejectedWithValue(error.response.data);
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -101,9 +103,11 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.guestId = `guest_${new Date().getTime()}`;
+      state.isAuthenticated = false;
       localStorage.setItem("guestId", state.guestId);
       localStorage.removeItem("userInfo");
       localStorage.removeItem("userToken");
+      localStorage.removeItem("userAuth");
     },
 
     generateNewGuestId: (state) => {
@@ -124,8 +128,10 @@ export const authSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        console.log(action.payload);
         state.loading = false;
         state.error = action.payload.message;
+        state.isAuthenticated = false;
       })
       .addCase(registerUser.pending, (state) => {
         state.loading = true;

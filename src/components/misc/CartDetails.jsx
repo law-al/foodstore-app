@@ -1,46 +1,53 @@
 import { Button } from "@/components/ui/button";
+import { deleteCartProduct, updateCartProduct } from "@/redux/slices/cartSlice";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import PayButton from "./PayButton";
 
-const products = [
-  {
-    id: 1,
-    name: "Orange Beverage",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid commodi esse magnam quaerat quam. Amet aperiam sint vel dignissimos molestias! Ratione voluptate, cupiditate ea quod assumenda unde quaerat saepe amet modi dolore. Natus fugit odio temporibus veniam in delectus libero?",
-    onSale: true,
-    price: 15,
-    discountPrice: 7.5,
-    images: [
-      "https://picsum.photos/100/100?random=1",
-      "https://picsum.photos/100/100?random=2",
-      "https://picsum.photos/100/100?random=3",
-    ],
-    rating: 5,
-    comments: [],
-    category: "Beverages",
-    brand: "Sunny Grove",
-    stock: 80,
-    sku: "12LF",
-    dietary: ["Vegan", "Gluten-Free"],
-    size: "1 Liter",
-    promotionId: 1,
-    quantity: 1,
-  },
-];
+function CartDetails({ cart }) {
+  const { user, guestId } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-function CartDetails() {
+  function handleUpdateCart(productId, delta, quantity) {
+    const newQauntity = quantity + delta;
+    if (newQauntity >= 1) {
+      dispatch(
+        updateCartProduct({
+          productId,
+          userId: user?._id,
+          guestId,
+          quantity: newQauntity,
+        })
+      );
+    }
+  }
+
+  function handleDeleteCartProduct(productId) {
+    dispatch(
+      deleteCartProduct({
+        productId,
+        userId: user?._id,
+        guestId,
+      })
+    );
+  }
+
   return (
-    <div className="h-full flex flex-col justify-between">
-      <div className="mt-8 w-full border border-black p-4">
-        {products.map((product) => (
+    <div className="h-full flex flex-col">
+      <div className="mt-8 w-fullp-4">
+        {cart.products.map((product) => (
           <div
-            key={product.id}
+            key={product.productId}
             className="p-2 w-full 
            flex items-center justify-between gap-2"
           >
-            <div className="">
-              <img src={product.images[0]} alt="Product Image" />
+            <div>
+              <img
+                src={product.image}
+                alt="Product Image"
+                className="w-[100px] h-[100px] object-cover"
+              />
             </div>
 
             <div className=" w-full flex flex-col">
@@ -54,6 +61,9 @@ function CartDetails() {
                   <Button
                     variant="outline"
                     size="icon"
+                    onClick={() =>
+                      handleUpdateCart(product.productId, -1, product.quantity)
+                    }
                     className="cursor-pointer font-extralight"
                   >
                     <AiOutlineMinus />
@@ -62,13 +72,19 @@ function CartDetails() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="cursor-pointer font-extralight"
+                    onClick={() =>
+                      handleUpdateCart(product.productId, 1, product.quantity)
+                    }
+                    className="cursor-pointer font-extralight mt-auto"
                   >
                     <AiOutlinePlus />
                   </Button>
                 </div>
 
-                <div className="">
+                <div
+                  onClick={() => handleDeleteCartProduct(product.productId)}
+                  className=""
+                >
                   <MdDelete className="text-2xl cursor-pointer text-red-600" />
                 </div>
               </div>
@@ -76,9 +92,7 @@ function CartDetails() {
           </div>
         ))}
       </div>
-      <Button className="bg-black text-white cursor-pointer hover:opacity-85">
-        Checkout
-      </Button>
+      <PayButton cart={cart} />
     </div>
   );
 }
